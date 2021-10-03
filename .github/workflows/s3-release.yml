@@ -1,0 +1,28 @@
+name: Release to S3
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install aws
+    - name: Sync with S3
+      run: |
+        aws --endpoint-url=https://storage.yandexcloud.net s3 sync ./datasets s3://${{ secret.S3_BUCKET_NAME }}/datasets
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.S3_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
+
