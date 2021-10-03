@@ -21,8 +21,8 @@ jobs:
         pip install aws
     - name: Sync with S3
       run: |
-        aws --endpoint-url=https://storage.yandexcloud.net s3 sync ./datasets s3://${{ secret.S3_BUCKET_NAME }}/datasets
+        aws --endpoint-url=https://storage.yandexcloud.net s3 sync ./datasets s3://${{ secrets.S3_BUCKET_NAME }}/datasets
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.S3_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
-
+        AWS_DEFAULT_REGION: eu-west-1
