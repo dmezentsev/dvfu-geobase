@@ -29,7 +29,7 @@ class Geobase:
     def add_record(self, name: str, first_letters: Optional[str]):
         if self._validate and not name.lower().startswith(first_letters):
             raise ValueError(f"Значение `{name}` не начинается с `{first_letters}`")
-        if self._linter and name.capitalize() != name:
+        if self._linter and first_letters.upper() != name[:1]:
             raise ValueError(f"Значение `{name}` должно начинаться с заглавной буквы")
         self._storage.append(name)
 
